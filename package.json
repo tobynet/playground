@@ -17,7 +17,7 @@
     "serve": "http-server dist/",
     "serve:php": "php -S localhost:8080 -t dist/",
     "serve-watch": "http-server dist/ & npm run watch",
-    "serve-watch:php": "run-p serve watch"
+    "serve-watch:php": "run-p serve:php watch"
   },
   "devDependencies": {
     "browserify": "^13.3.0",
