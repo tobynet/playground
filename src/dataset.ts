@@ -220,7 +220,49 @@ export function classifyOxtuData(numSamples: number, noise: number):
     {label: 1,  ratio: 0.2,   p0: {x: 5.0, y: -1.0},    p1: {x: 4.7, y: -3.0}},
     {label: 1,  ratio: 0.3,   p0: {x: 4.7, y: -3.0},    p1: {x: 2.0, y: -4.6}},
   ];
-  const randRadius = 3;
+
+  return makeClassifyDataWithLines(numSamples, noise, props);
+}
+
+export function classifyJavaData(numSamples: number, noise: number):
+    Example2D[] {
+
+  let props = [
+    // character of di
+    {label: 1,  ratio: 1.0,   p0: {x: -4.0, y: 0.5},    p1: {x: -3.0, y: 0.0}}, 
+    {label: -1, ratio: 1.0,   p0: {x: -4.0, y: 2.0},    p1: {x: -3.0, y: 1.0}}, 
+    {label: -1, ratio: 1.5,   p0: {x: -1.0, y: 1.0},    p1: {x: -2.0, y: -1.0}},
+    {label: -1, ratio: 1.5,   p0: {x: -4.0, y: -1.7},   p1: {x: -2.0, y: -1.0}},
+    {label: 1,  ratio: 0.5,   p0: {x: -2.0, y: 3.0},    p1: {x: -2.0, y: 2.0}}, 
+    {label: -1, ratio: 0.5,   p0: {x: -1.0, y: 3.0},    p1: {x: -1.0, y: 2.0}}, 
+
+    // character of xya
+    {label: -1, ratio: 1.0,   p0: {x: -1.5, y: -3.5},   p1: {x: 0.5, y: -2.5}}, 
+    {label: -1, ratio: 0.5,   p0: {x: -0.0, y: -3.5},   p1: {x: 0.5, y: -2.5}}, 
+    {label:  1, ratio: 0.8,   p0: {x: -1.2, y: -2.0},   p1: {x: -0.4, y: -4.5}},
+
+    // character of ba
+    {label: 1,  ratio: 0.5,   p0: {x: 2.0, y: 1.0},     p1: {x: 2.0, y: 0.0}},
+    {label: 1,  ratio: 1.0,   p0: {x: 1.0, y: -2.0},    p1: {x: 2.0, y: 0.0}},
+    {label: -1, ratio: 1.5,   p0: {x: 3.5, y: 1.0},     p1: {x: 4.5, y: -2.0}}, 
+    {label: 1,  ratio: 0.5,   p0: {x: 3.0, y: 3.0},     p1: {x: 3.0, y: 2.0}}, 
+    {label: -1, ratio: 0.5,   p0: {x: 4.0, y: 3.0},     p1: {x: 4.0, y: 2.0}}, 
+  ];
+
+  return makeClassifyDataWithLines(numSamples, noise, props);
+}
+
+
+interface PropertyForLines {
+  label: number;
+  ratio: number;
+  p0: Point 
+  p1: Point;
+};
+
+function makeClassifyDataWithLines(numSamples: number, noise: number, props: PropertyForLines[], randRadius: number = 3):
+    Example2D[] {
+
   const sumOfRatio = props.reduce((sum,x) => sum + x.ratio, 0);
 
   let points: Example2D[] = [];
@@ -233,12 +275,13 @@ export function classifyOxtuData(numSamples: number, noise: number):
       let noiseX = randUniform(-randRadius, randRadius) * noise;
       let noiseY = randUniform(-randRadius, randRadius) * noise;
 
-      points.push({x: p.x + noiseX, y: p.y + noiseY, label: prop.label});
+      points.push({x: p.x + noiseX, y: p.y + noiseY, label: Number(prop.label)});
     }
   }
   
   return points;
 }
+
 
 
 /**
