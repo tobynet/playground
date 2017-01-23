@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rm -rf dist/",
     "prep": "typings install && mkdir -p dist && cat node_modules/material-design-lite/material.min.js node_modules/d3/d3.min.js node_modules/seedrandom/seedrandom.min.js > dist/lib.js && cp analytics.js dist/.",
+    "prep_": "",
     "build-css": "cat node_modules/material-design-lite/material.min.css styles.css > dist/bundle.css",
     "watch-css": "node_modules/catw/bin/cmd.js node_modules/material-design-lite/material.min.css styles.css -o dist/bundle.css",
     "build-html": "cat index.html > dist/index.html",
@@ -14,16 +15,19 @@
     "watch-js": "watchify src/playground.ts -p [tsify] -v --debug -o dist/bundle.js",
     "build": "npm run prep && npm run build-js && npm run build-css && npm run build-html",
     "watch": "npm run prep & npm run watch-js & npm run watch-css & npm run watch-html",
-    "serve": "http-server dist/",
-    "serve-watch": "http-server dist/ & npm run watch"
+    "serve_": "http-server dist/",
+    "serve": "php -S localhost:8080 -t dist/",
+    "serve-watch_": "http-server dist/ & npm run watch",
+    "serve-watch": "php -S localhost:8080 -t dist/ & npm run watch"
   },
   "devDependencies": {
+    "browserify": "^13.3.0",
+    "http-server": "^0.9.0",
+    "tsify": "^0.14.1",
     "typescript": "^1.8.7",
     "typings": "^0.7.9",
     "uglify-js": "^2.6.2",
-    "tsify": "^0.14.1",
-    "watchify": "^3.7.0",
-    "http-server": "^0.9.0"
+    "watchify": "^3.8.0"
   },
   "dependencies": {
     "catw": "^1.0.1",
