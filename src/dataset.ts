@@ -204,6 +204,43 @@ export function classifyXORData(numSamples: number, noise: number):
   return points;
 }
 
+export function classifyOxtuData(numSamples: number, noise: number):
+    Example2D[] {
+
+  const props = [
+    // character of o
+    {label: 1,  ratio: 1.0,   p0: {x: -4.0, y: 3.0},    p1: {x: 1.5,  y: 3.0}}, 
+    {label: 1,  ratio: 1.0,   p0: {x: -0.8, y: 4.5},    p1: {x: -0.8, y: -2.0}}, 
+    {label: 1,  ratio: 0.08,  p0: {x: -0.9, y: -1.6},   p1: {x: -2.0, y: -1.0}},
+    {label: -1, ratio: 0.8,   p0: {x: -1.6, y: 2.0},    p1: {x: -4.0, y: -1.0}},
+
+    // // character of xtu
+    {label: -1, ratio: 0.2,   p0: {x: 1.7, y: -1.5},    p1: {x: 2.2, y: -2.5}}, 
+    {label: -1, ratio: 0.2,   p0: {x: 3.0, y: -1.0},    p1: {x: 3.5, y: -2.0}}, 
+    {label: 1,  ratio: 0.2,   p0: {x: 5.0, y: -1.0},    p1: {x: 4.7, y: -3.0}},
+    {label: 1,  ratio: 0.3,   p0: {x: 4.7, y: -3.0},    p1: {x: 2.0, y: -4.6}},
+  ];
+  const randRadius = 3;
+  const sumOfRatio = props.reduce((sum,x) => sum + x.ratio, 0);
+
+  let points: Example2D[] = [];
+
+  for (let prop of props) {
+    let num = Math.floor(prop.ratio / sumOfRatio * numSamples);
+    for (let j = 0; j < num; j++) {
+      let p = randOnLine(prop.p0, prop.p1);
+      
+      let noiseX = randUniform(-randRadius, randRadius) * noise;
+      let noiseY = randUniform(-randRadius, randRadius) * noise;
+
+      points.push({x: p.x + noiseX, y: p.y + noiseY, label: prop.label});
+    }
+  }
+  
+  return points;
+}
+
+
 /**
  * Returns a sample from a uniform [a, b] distribution.
  * Uses the seedrandom library as the random generator.
@@ -211,6 +248,19 @@ export function classifyXORData(numSamples: number, noise: number):
 function randUniform(a: number, b: number) {
   return Math.random() * (b - a) + a;
 }
+
+/**
+ * Returns a sample from two points.
+ * Uses the seedrandom library as the random generator.
+ */
+function randOnLine(a: Point, b: Point): Point {
+  const t = Math.random();
+  return {
+    x: a.x + (b.x - a.x) * t,
+    y: a.y + (b.y - a.y) * t  
+  };
+}
+
 
 /**
  * Samples from a normal distribution. Uses the seedrandom library as the
