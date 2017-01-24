@@ -1,5 +1,15 @@
 # Deep playground
 
+👉 Online Demo http://labo.tobysoft.net/tensorflow-playground/
+
+![](https://i.gyazo.com/61491a5ad85ab124f8e98e1f18794261.png)
+![](https://i.gyazo.com/8f8ba04d68d2b21166b68b8609442e5c.gif)
+![](https://i.gyazo.com/24c90466c177e93436333ab360086be7.gif)
+
+📝 This project forked from [tensorflow/playground].
+
+----
+
 Deep playground is an interactive visualization of neural networks, written in typescript using d3.js.
 We use github issues for tracking new requests and bugs. Your feedback is highly appreciated!
 
@@ -18,3 +28,5 @@ To produce a minified javascript file for production, run `npm run build`.
 To push to production: `git subtree push --prefix dist origin gh-pages`.
 
 This is not an official Google product.
+
+[tensorflow/playground]: https://github.com/tensorflow/playground
